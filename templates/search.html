@@ -1,0 +1,22 @@
+{% extends "main.html" %}
+{% block main %}
+    {% for m in data %}
+        <div class="content">
+            <img src="{{ m.cover }}" alt="{{ m.name }}">
+            <h3>{{ m.name }}</h3>
+            {% for i in m.info %}
+                <p>{{ i }}{{ m.info[i] }}</p>
+            {% endfor %}
+            <p>剧情介绍：{{ m.intro }}</p>
+            <br/>
+            <div class="des">
+                {% for n in m.play %}
+                    <a href="https://api.leduotv.com/wp-api/ifr.php?vid={{ n.1 }}"><div class="link">{{ n.0 }}</div></a>
+                {% endfor %}
+<!--                {% for n in m.play_info %}-->
+<!--                    <a href="{{ n.1 }}"><div class="link">{{ n.0 }}</div></a>-->
+<!--                {% endfor %}-->
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
