@@ -12,5 +12,5 @@
 
  # Run app.py when the container launches
  # CMD ["python", "run.py"]
- CMD ["python","-m","uvicorn","main:app","--workers","4"]
+ CMD ["python","-m","uvicorn","main:app","--host","0.0.0.0","--port","52","--workers","4"]
  # CMD ["python","-m","gunicorn", "main:app", "-c","gunicorn.py"]
