@@ -11,5 +11,6 @@
  RUN pip install -r requirements.txt -i https://pypi.doubanio.com/simple/
 
  # Run app.py when the container launches
- CMD ["python", "run.py"]
-# CMD ["gunicorn", "main:app", "-c","gunicorn.py"]
+ # CMD ["python", "run.py"]
+ CMD ["python","-m","uvicorn","main:app","--workers","4"]
+ # CMD ["python","-m","gunicorn", "main:app", "-c","gunicorn.py"]
