@@ -30,6 +30,18 @@ jinja = SanicJinja2(app)
 async def task_sleep(): await asyncio.sleep(3)
 
 
+def ua():
+    random_ip = '.'.join(str(randint(0, 255)) for _ in range(4))
+    return {"User-Agent": generate_user_agent(), "X-FORWARDED-FOR": random_ip, "X-REAL-IP": random_ip,
+            "CLIENT-IP": random_ip}
+
+
+async def async_ua():
+    ip = '.'.join(str(randint(0, 255)) for _ in range(4))
+    return {"User-Agent": generate_user_agent(), "X-FORWARDED-FOR": ip, "X-REAL-IP": ip,
+            "CLIENT-IP": ip}
+
+
 @app.route('/')
 @jinja.template('main.html')
 async def index(request):
@@ -55,7 +67,7 @@ async def adage(request):
         "resource_id": "6844",
         "_": str(int(time.time() * 1000)),
     }
-    headers = {"User-Agent": generate_user_agent()}
+    headers = await async_ua()
     try:
         async with aiohttp.ClientSession() as client:
             async with client.get(url=url, params=params, headers=headers) as rs:
@@ -93,9 +105,10 @@ async def movie(request):
         "start": "0",
         "count": "50",
     }
-    headers = {
+    headers = await async_ua()
+    headers.update({
         "user-agent": "Rexxar-Core/0.1.3 api-client/1 com.douban.frodo/6.21.0(165) Android/28 product/MAR-AL00 vendor/HUAWEI model/MAR-AL00 rom/android network/wifi platform/mobile com.douban.frodo/6.21.0(165) Rexxar/1.2.151 platform/mobile 1.2.151",
-    }
+    })
     try:
         async with aiohttp.ClientSession() as client:
             async with client.get(url=url, params=params, headers=headers) as rs:
@@ -149,7 +162,7 @@ async def search_movie(request):
         'title': "搜索",
         'url': '/movie/search',
     }
-    headers = {"User-Agent": generate_user_agent()}
+    headers = await async_ua()
     url = f'{source_url}/index.php'
     # url = f'{source_url}/search.html'
     params = {
@@ -197,7 +210,7 @@ async def search_movie(request):
 
 async def aparse(url, timeout):
     url = f'{source_url}{url}'
-    headers = {"User-Agent": generate_user_agent()}
+    headers = await async_ua()
     async with aiohttp.ClientSession() as client:
         async with client.get(url=url, headers=headers, timeout=timeout) as rs:
             if rs.status == 200:
@@ -218,7 +231,7 @@ async def aparse(url, timeout):
 
 def parse(url, timeout):
     url = f'{source_url}{url}'
-    headers = {"User-Agent": generate_user_agent()}
+    headers = ua()
     with requests.get(url=url, headers=headers, timeout=timeout) as rs:
         if rs.status_code == 200:
             html = etree.HTML(rs.text)
@@ -248,7 +261,7 @@ async def music(request):
     else:
         keyword = "周杰伦"
     url = 'http://api.migu.jsososo.com/search'
-    headers = {"User-Agent": generate_user_agent()}
+    headers = await async_ua()
     params = {
         "keyword": keyword
     }
@@ -283,7 +296,7 @@ async def down_music(request):
         "cid": dict(request.args).get("cid", "")[0],
         "needPic": 1
     }
-    headers = {"User-Agent": generate_user_agent()}
+    headers = await async_ua()
     try:
         async with aiohttp.ClientSession() as client:
             async with client.get(url=url, params=params, headers=headers) as rs:
