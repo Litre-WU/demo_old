@@ -26,7 +26,7 @@ workers = 4  # 进程数
 
 threads = 4  # 指定每个进程开启的线程数
 
-daemon = True  # 守护进程
+# daemon = True  # 守护进程
 
 reload = True  # 自动加载
 
