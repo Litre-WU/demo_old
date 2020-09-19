@@ -18,6 +18,7 @@ timeout = 120  # 超时
 
 # worker_class = 'gevent' # 默认的是sync模式
 worker_class = 'uvicorn.workers.UvicornWorker'  # 使用uvicorn模式
+# worker_class = 'uvicorn.workers.UvicornH11Worker'  # 使用纯python模式
 
 # workers = multiprocessing.cpu_count() * 2 + 1  # 进程数
 # workers = multiprocessing.cpu_count() * 2 + 1  # 进程数
