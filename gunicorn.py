@@ -6,7 +6,7 @@ import os
 import multiprocessing
 
 
-# chdir = '/app/'  # 加载应用程序之前将chdir目录指定到指定目录
+# chdir = '/demo'  # 加载应用程序之前将chdir目录指定到指定目录
 
 proc_name = 'demo'  # 进程名
 
