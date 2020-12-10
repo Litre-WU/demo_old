@@ -1,6 +1,9 @@
 # 基于镜像基础
  FROM python:3.8.6
-
+ 
+ # 设置时区
+ ENV TZ Asia/Shanghai
+ 
  # 设置代码文件夹工作目录 /app
  WORKDIR /demo
 
