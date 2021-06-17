@@ -9,7 +9,7 @@
             <h5>{{ m.name }}</h5>
             <h5>{{ m.album.name }}</h5>
             <h5>{{ m.artists.0.name }}</h5>
-            <div id="tone"><div content="/music/sort?cid={{ m.cid }}&id={{ m.id }}&tone=128k">HQ</div><div content="/music/sort?cid={{ m.cid }}&id={{ m.id }}&tone=320k">SQ</div><div content="/music/sort?cid={{ m.cid }}&id={{ m.id }}&tone=flac">FLAC</div></div>
+            <div id="tone"><div content="/music/sort?singer={{ m.artists.0.name }}&song={{ m.name }}&tone=128">HQ</div><div content="/music/sort?singer={{ m.artists.0.name }}&song={{ m.name }}&tone=320">SQ</div><div content="/music/sort?singer={{ m.artists.0.name }}&song={{ m.name }}&tone=flac">FLAC</div></div>
             <a href="{{ m.url }}" id="mplay"><div class="mplay">试听</div></a>
             </span>
         </div>
