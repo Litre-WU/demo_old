@@ -260,7 +260,7 @@ async def music(request):
         keyword = dict(request.args).get("keyword", "")[0]
     else:
         keyword = "周杰伦"
-    url = 'http://api.migu.jsososo.com/search'
+    url = 'http://121.37.209.113:8090/search'
     headers = await async_ua()
     params = {
         "keyword": keyword
@@ -289,7 +289,7 @@ async def music(request):
 
 @app.route('/music/sort')
 async def down_music(request):
-    url = 'http://api.migu.jsososo.com/song/url'
+    url = 'http://121.37.209.113:8090/song/url'
     tone = dict(request.args).get("tone", "")[0]
     params = {
         "id": dict(request.args).get("id", "")[0],
