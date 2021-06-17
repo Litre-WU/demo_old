@@ -27,7 +27,7 @@ session = Session(app, interface=InMemorySessionInterface())
 jinja = SanicJinja2(app)
 
 
-async def task_sleep(): await asyncio.sleep(3)
+async def task_sleep(): await asyncio.sleep(randint(1, 2))
 
 
 def ua():
@@ -289,19 +289,20 @@ async def music(request):
 
 @app.route('/music/sort')
 async def down_music(request):
-    url = 'http://121.37.209.113:8090/song/url'
-    tone = dict(request.args).get("tone", "")[0]
+    url = 'http://121.37.209.113:8090/song/find'
+    singer = request.args.get("singer", "")
+    song = request.args.get("song", "")
+    tone = request.args.get("tone", "")
     params = {
-        "id": dict(request.args).get("id", "")[0],
-        "cid": dict(request.args).get("cid", "")[0],
-        "needPic": 1
+        "keyword": f'{singer}+{song}'
     }
     headers = await async_ua()
     try:
         async with aiohttp.ClientSession() as client:
             async with client.get(url=url, params=params, headers=headers) as rs:
                 if rs.status == 200:
-                    data = json.loads(await rs.text()).get("data")
+                    # print(await rs.text())
+                    data = json.loads(await rs.text()).get("data", "")
                     if data:
                         result = {
                             "result": data.get(tone, "")
