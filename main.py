@@ -102,18 +102,22 @@ async def movie(request):
     myLoop.create_task(task_sleep())
     url = 'https://frodo.douban.com/api/v2/subject_collection/movie_hot_gaia/items'
     params = {
-        "start": "0",
+        "start": "NaN",
         "count": "50",
+        "apiKey": "0ac44ae016490db2204ce0a042db2916"
     }
     headers = await async_ua()
     headers.update({
-        "user-agent": "Rexxar-Core/0.1.3 api-client/1 com.douban.frodo/6.21.0(165) Android/28 product/MAR-AL00 vendor/HUAWEI model/MAR-AL00 rom/android network/wifi platform/mobile com.douban.frodo/6.21.0(165) Rexxar/1.2.151 platform/mobile 1.2.151",
-    })
+        "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36 MicroMessenger/7.0.9.501 NetType/WIFI MiniProgramEnv/Windows WindowsWechat",
+        "content-type": "application/json",
+        "Referer": "https://servicewechat.com/wx2f9b06c1de1ccfca/82/page-frame.html",
+        "Accept-Encoding": "gzip, deflate, br"})
     try:
         async with aiohttp.ClientSession() as client:
             async with client.get(url=url, params=params, headers=headers) as rs:
                 if rs.status == 200:
-                    info = json.loads(await rs.text())
+                    info = await rs.json()
+                    # print(info)
                     result = {
                         'title': "电影",
                         'url': '/movie/search',
