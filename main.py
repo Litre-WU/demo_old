@@ -358,7 +358,7 @@ async def wxid_add(request):
             qr.make(fit=True)
 
             img = qr.make_image(fill_color="black", back_color="white")
-
+            os.makedirs(WX_QRCODE, exist_ok=True)
             img.save(f'{WX_QRCODE}{wxid}.png')
             # img.show()
             result = {
