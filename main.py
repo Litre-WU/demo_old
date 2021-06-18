@@ -47,7 +47,7 @@ async def async_ua():
 async def index(request):
     myLoop = request.app.loop
     myLoop.create_task(task_sleep())
-    return {"title": "首页", "url": "/music/search"}
+    return {"title": "首页", "url": "/music/"}
 
 
 @app.route('/adage/')
@@ -124,6 +124,7 @@ async def movie(request):
                         'results': info,
                     }
                     for m in info["subject_collection_items"]:
+                        os.makedirs(douban50, exist_ok=True)
                         img_name = douban50 + f'{m["id"]}.png'
                         if os.path.exists(img_name):
                             continue
