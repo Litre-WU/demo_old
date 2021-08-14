@@ -1,6 +1,6 @@
 # 项目运行
 
-`pip install -r requirements.txt`
+`pip install -r requirements.txt -i https://pypi.doubanio.com/simple/``
 
 `gunicorn -c gunicorn.py main:app`
 
